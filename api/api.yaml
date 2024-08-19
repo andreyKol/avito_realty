@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Realty API
+  version: 1.0.0
+paths:
+  /house/create:
+    post:
+      summary: Create a new house
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHouseRequest'
+      responses:
+        '200':
+          description: House created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+  /flat/create:
+    post:
+      summary: Create a new flat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFlatRequest'
+      responses:
+        '200':
+          description: Flat created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flat'
+  /flat/update:
+    patch:
+      summary: Update a flat status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFlatStatusRequest'
+      responses:
+        '200':
+          description: Flat updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flat'
+  /house/{id}:
+    get:
+      summary: Get flats by house ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of flats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flat'
+  /house/{id}/subscribe:
+    post:
+      summary: Subscribe to a house
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeRequest'
+      responses:
+        '200':
+          description: Subscription success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: subscribed
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    RegisterResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        token:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        token:
+          type: string
+    House:
+      type: object
+      properties:
+        id:
+          type: integer
+        address:
+          type: string
+        year:
+          type: integer
+        developer:
+          type: string
+    CreateHouseRequest:
+      type: object
+      properties:
+        address:
+          type: string
+        year:
+          type: integer
+        developer:
+          type: string
+    Flat:
+      type: object
+      properties:
+        id:
+          type: integer
+        houseID:
+          type: integer
+        price:
+          type: number
+        rooms:
+          type: integer
+    CreateFlatRequest:
+      type: object
+      properties:
+        houseID:
+          type: integer
+        price:
+          type: number
+        rooms:
+          type: integer
+    UpdateFlatStatusRequest:
+      type: object
+      properties:
+        flatID:
+          type: integer
+        newStatus:
+          type: string
+    SubscribeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        houseID:
+          type: integer

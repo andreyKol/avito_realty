@@ -1,0 +1,16 @@
+serviceName: "Realty"
+
+JWTSecret: "a_longer_secret_key_for_hs512_that_is_at_least_64_bytes_long"
+
+Server:
+  Jost: "localhost"
+  port: "8080"
+
+Postgres:
+  host: "localhost"
+  port: "5432"
+  user: "postgres"
+  password: "963852741"
+  DBName: "realty"
+  sslMode: "disable"
+  pgDriver: "pgx"
